@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Video Player by Ritam</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .video-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        video {
+            width: 100%; /* Make video responsive within its container */
+            max-width: 800px; /* Optional: set a maximum width */
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video id="myVideo" controls width="800" height="450">
+            <source src="path/to/your/hd_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // Optional: You can add JavaScript here for more advanced controls or features.
+        const videoPlayer = document.getElementById('myHDVideo');
+
+        videoPlayer.addEventListener('loadedmetadata', function() {
+            console.log('Video metadata loaded.');
+        });
+
+        videoPlayer.addEventListener('play', function() {
+            console.log('Video is playing.');
+        });
+
+        videoPlayer.addEventListener('pause', function() {
+            console.log('Video paused.');
+        });
+    </script>
+
+</body>
+  </html>
+  
