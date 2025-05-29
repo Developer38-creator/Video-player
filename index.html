@@ -119,7 +119,7 @@
     vid.poster = video.thumbnail;
     vid.setAttribute('playsinline', '');
     vid.setAttribute('webkit-playsinline', '');
-    vid.muted = true;
+    vid.muted = false;
     vid.loop = true;
     vid.className = 'w-full max-w-[420px] h-auto max-h-[746px] object-cover cursor-pointer select-none';
     vid.preload = 'metadata';
@@ -178,7 +178,7 @@
 
     const userName = document.createElement('span');
     userName.className = 'font-semibold text-white text-base';
-    userName.textContent = 'wiserblue_store';
+    userName.textContent = 'Ritam';
 
     const followBtn = document.createElement('button');
     followBtn.className = 'border border-white rounded-full px-3 py-1 text-white text-sm font-semibold hover:bg-white hover:text-black transition';
@@ -195,7 +195,7 @@
     const bottomRightMusic = document.createElement('div');
     bottomRightMusic.className = 'w-10 h-10 rounded-md overflow-hidden border border-white flex justify-center items-center';
     const musicImg = document.createElement('img');
-    musicImg.src = 'https://placehold.co/40x40/png?text=♪';
+    musicImg.src = 'Images/IMG-20250526-WA0003.jpg';
     musicImg.alt = 'Music note icon in a square container';
     musicImg.className = 'w-full h-full object-cover';
     bottomRightMusic.appendChild(musicImg);
