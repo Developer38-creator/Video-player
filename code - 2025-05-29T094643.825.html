@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Video Player</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically on mobile */
+            align-items: center;
+            padding: 10px;
+        }
+
+        .video-player {
+            width: 100%;  /* Take full width on mobile */
+            max-width: 640px; /* Limit maximum width */
+        }
+
+        video {
+            width: 100%; /* Make video responsive */
+            height: auto;
+        }
+
+        .playlist {
+            width: 100%; /* Take full width on mobile */
+            max-width: 640px;
+        }
+
+        .playlist ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .playlist li {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .playlist li:last-child {
+            border-bottom: none;
+        }
+
+        .playlist li img {
+            width: 50px;
+            height: 35px;
+            margin-right: 8px;
+            object-fit: cover;
+        }
+
+        .playlist li.active {
+            background-color: #ddd;
+        }
+
+        .controls {
+            margin-top: 5px;
+            text-align: center; /* Center buttons on mobile */
+        }
+
+        .controls button {
+            padding: 6px 10px;
+            margin: 0 5px; /* Adjust button spacing */
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="video-player">
+            <video id="main-video" controls></video>
+            <div class="controls">
+                <button id="play-pause">Play</button>
+                <button id="next-video">Next</button>
+                <button id="previous-video">Previous</button>
+            </div>
+        </div>
+
+        <div class="playlist">
+            <h3>Playlist</h3>
+            <ul id="playlist-ul">
+                <!-- Video items will be added here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const videoPlayer = document.getElementById('main-video');
+        const playlistUl = document.getElementById('playlist-ul');
+        const playPauseButton = document.getElementById('play-pause');
+        const nextVideoButton = document.getElementById('next-video');
+        const previousVideoButton = document.getElementById('previous-video');
+
+        let currentVideoIndex = 0;
+
+        const videos = [
+            {
+                src: 'video1.mp4',
+                title: 'Video 1',
+                thumbnail: 'thumbnail1.jpg'
+            },
+            {
+                src: 'video2.mp4',
+                title: 'Video 2',
+                thumbnail: 'thumbnail2.jpg'
+            },
+            {
+                src: 'video3.mp4',
+                title: 'Video 3',
+                thumbnail: 'thumbnail3.jpg'
+            },
+            {
+                src: 'video4.mp4',
+                title: 'Video 4',
+                thumbnail: 'thumbnail4.jpg'
+            },
+            {
+                src: 'video5.mp4',
+                title: 'Video 5',
+                thumbnail: 'thumbnail5.jpg'
+            }
+        ];
+
+        function loadVideo(index) {
+            videoPlayer.src = videos[index].src;
+            videoPlayer.load();
+            videoPlayer.onloadedmetadata = () => {
+                videoPlayer.play();
+            };
+        }
+
+        function createPlaylistItem(video, index) {
+            const li = document.createElement('li');
+            li.innerHTML = `<img src="${video.thumbnail}" alt="${video.title}"> ${video.title}`;
+            li.addEventListener('click', () => {
+                currentVideoIndex = index;
+                loadVideo(currentVideoIndex);
+                updatePlaylistHighlight();
+            });
+            return li;
+        }
+
+        function populatePlaylist() {
+            videos.forEach((video, index) => {
+                const li = createPlaylistItem(video, index);
+                playlistUl.appendChild(li);
+            });
+            updatePlaylistHighlight();
+        }
+
+        function updatePlaylistHighlight() {
+            const playlistItems = document.querySelectorAll('#playlist-ul li');
+            playlistItems.forEach((item, index) => {
+                if (index === currentVideoIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        playPauseButton.addEventListener('click', () => {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+                playPauseButton.textContent = 'Pause';
+            } else {
+                videoPlayer.pause();
+                playPauseButton.textContent = 'Play';
+            }
+        });
+
+        nextVideoButton.addEventListener('click', () => {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            loadVideo(currentVideoIndex);
+            updatePlaylistHighlight();
+        });
+
+        previousVideoButton.addEventListener('click', () => {
+            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            loadVideo(currentVideoIndex);
+            updatePlaylistHighlight();
+        });
+
+        loadVideo(currentVideoIndex);
+        populatePlaylist();
+    </script>
+
+</body>
+</html>
